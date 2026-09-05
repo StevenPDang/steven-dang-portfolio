@@ -8,9 +8,9 @@ export default function Contact() {
       className="relative mt-10 overflow-hidden rounded-t-[3rem] bg-forest px-6 py-24 text-cream sm:px-10 lg:py-32"
     >
       <div className="mx-auto max-w-4xl">
-        <Reveal className="font-display text-3xl tracking-wide sm:text-4xl">Let's talk</Reveal>
+        <Reveal className="font-display text-3xl tracking-wide sm:text-4xl">Contact Info</Reveal>
         <Reveal delay={100} className="mt-4 max-w-xl text-cream/70">
-          Have a project in mind, or just want to say hi? I'm easiest to reach here.
+          You can reach me here!
         </Reveal>
 
         <Reveal delay={200} className="mt-12 flex flex-wrap items-center gap-4">

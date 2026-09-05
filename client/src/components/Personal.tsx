@@ -14,7 +14,7 @@ export default function Personal() {
           {personal.label.toUpperCase()}
         </Reveal>
         <Reveal delay={80}>
-          <img src={koichaLogo} alt="Koicha" className="mx-auto h-16 w-auto sm:h-20" />
+          <img src={koichaLogo} alt="Koicha" className="mx-auto h-48 w-auto sm:h-84" />
         </Reveal>
         <Reveal delay={150} as="h2" className="mt-6 font-display text-3xl text-forest sm:text-4xl">
           {personal.heading}

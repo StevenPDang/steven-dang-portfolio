@@ -13,7 +13,7 @@ export const profile = {
 export const marqueeText = ''
 
 export const statement = {
-  heading: ['Systems-minded,', 'coffee-fueled,', 'always building.'],
+  heading: ["\"Behold! I have brought you a man.\"", "- Diogenes"],
   body: [
     "Hi, I'm Steven, a Computer Science student at the University of Texas at Arlington (3.72 GPA, expected Dec 2027), currently working as an undergraduate ML researcher building retrieval pipelines over relational databases. This past summer I interned as a Software Engineer at Business Wire, shipping production fixes for an enterprise publishing platform used by news organizations worldwide.",
     'Before that, I founded and ran Koicha, a popup coffee business in Fort Worth featured in two University Articles.',
@@ -73,7 +73,7 @@ export const projects = [
     title: 'Relational Retrieval Pipeline',
     tag: 'Research',
     description:
-      'A Python/SQL pipeline that builds representative coresets from multi-table relational databases for relational transformer training.',
+      'A Python/SQL pipeline that builds representative coresets from multi-table relational databases for relational transformer training. (Dr. Aboulnaga)',
     href: '#',
   },
   {
@@ -87,7 +87,7 @@ export const projects = [
 
 export const personal = {
   label: 'Off the Clock',
-  heading: 'Coffee, brewed on weekends.',
-  body: 'Before Business Wire, I founded Koicha — a popup coffee business in Fort Worth that grew a team of nine and drew 40+ minute lines at partner events.',
+  heading: 'Matcha on the weekends.',
+  body: 'Before Business Wire, I founded Koicha — a popup cafe business in DFW. I have slowed down the popups since my summer internship, but I\'m looking to get back soon!',
   // TODO: drop in photos from the pop-up here once you have them ready.
 }

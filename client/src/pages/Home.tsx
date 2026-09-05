@@ -13,7 +13,7 @@ export default function Home() {
   const marqueeRef = useRef<HTMLDivElement>(null)
 
   return (
-    <div className="min-h-screen bg-cream text-ink">
+    <div className="min-h-screen overflow-x-hidden bg-cream text-ink">
       <Nav />
       <main>
         <Hero />
