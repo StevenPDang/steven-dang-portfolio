@@ -1,0 +1,117 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Jost", "Inter", sans-serif;
+  --font-body: "Inter", sans-serif;
+
+  --color-cream: #faf7f0;
+  --color-cream-dim: #f2ede1;
+  --color-forest: #2f4438;
+  --color-forest-light: #3f5647;
+  --color-forest-dark: #22322a;
+  --color-sand: #e7dcc6;
+  --color-sand-dim: #ddceae;
+  --color-ink: #33392f;
+  --color-muted: #6f7669;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* scroll-reveal primitive: elements start hidden/offset, JS flips data-visible */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+[data-reveal="visible"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-drift-a,
+  .animate-drift-b,
+  .animate-pulse-glow {
+    animation: none;
+  }
+}
+
+/* hero blobs: brisk, non-synced drifting (translate only — pulse handles scale separately,
+   on a nested element, so the two effects compose instead of fighting over `transform`).
+   Kept fast enough (10-13s) that the staggered trail echoes stay visibly separated. */
+@keyframes drift-a {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(140px, -170px);
+  }
+  50% {
+    transform: translate(-90px, 90px);
+  }
+  75% {
+    transform: translate(70px, 160px);
+  }
+}
+
+@keyframes drift-b {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-160px, 110px);
+  }
+  50% {
+    transform: translate(110px, -70px);
+  }
+  75% {
+    transform: translate(-70px, -140px);
+  }
+}
+
+.animate-drift-a {
+  animation: drift-a 11s ease-in-out infinite;
+}
+
+.animate-drift-b {
+  animation: drift-b 13s ease-in-out infinite;
+  animation-delay: -4s;
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.35);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 4s ease-in-out infinite;
+}
