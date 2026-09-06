@@ -18,15 +18,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
-      # npm ci here hits a known npm bug with platform-specific optional deps
-      # (npm/cli#4828) — our lockfile was generated on macOS, and Vite's rolldown
-      # binding for linux-x64 doesn't always get installed under `ci`'s strict mode.
-      # `npm install` re-resolves the correct native binary for this runner.
+      # The committed lockfiles were generated on macOS and don't carry correct
+      # optional-dependency data for Linux (npm/cli#4828 — rolldown's native binding
+      # ends up missing). Switching npm ci -> npm install alone didn't fix it, since
+      # the bad data lives in the lockfile itself. Drop the lockfiles here so npm
+      # resolves everything fresh, directly on this runner's actual platform.
+      - run: rm -f package-lock.json client/package-lock.json server/package-lock.json
       - run: npm install
       - run: npm run build --workspace client
       - uses: actions/upload-pages-artifact@v3
