@@ -22,9 +22,10 @@ export function useScrollProgress<T extends HTMLElement>(smoothing = 0.012, targ
   const [progress, setProgress] = useState(0)
   const targetProgressRef = useRef(0)
   const displayRef = useRef(0)
+  const rafIdRef = useRef<number | null>(null)
 
   useEffect(() => {
-    const computeTarget = () => {
+    const measure = () => {
       const node = ref.current
       if (!node) return
       const rect = node.getBoundingClientRect()
@@ -34,32 +35,47 @@ export function useScrollProgress<T extends HTMLElement>(smoothing = 0.012, targ
     }
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      computeTarget()
+      measure()
       setProgress(targetProgressRef.current)
       return
     }
 
-    computeTarget()
-
-    let rafId: number
+    // The easing loop only runs while the displayed value hasn't caught up to the target —
+    // it self-stops once converged instead of ticking (and re-measuring layout) forever, which
+    // was previously the case even while the page sat perfectly still.
     const tick = () => {
-      // Re-measure every frame (not just on scroll) so a late-attaching target ref, or one
-      // that moves for reasons other than scrolling, still gets picked up.
-      computeTarget()
       const delta = targetProgressRef.current - displayRef.current
-      displayRef.current += Math.abs(delta) < 0.0005 ? delta : delta * smoothing
+      if (Math.abs(delta) < 0.0005) {
+        displayRef.current = targetProgressRef.current
+        setProgress(displayRef.current)
+        rafIdRef.current = null
+        return
+      }
+      displayRef.current += delta * smoothing
       setProgress(displayRef.current)
-      rafId = requestAnimationFrame(tick)
+      rafIdRef.current = requestAnimationFrame(tick)
     }
 
-    window.addEventListener('scroll', computeTarget, { passive: true })
-    window.addEventListener('resize', computeTarget)
-    rafId = requestAnimationFrame(tick)
+    const ensureTicking = () => {
+      if (rafIdRef.current === null) {
+        rafIdRef.current = requestAnimationFrame(tick)
+      }
+    }
+
+    const onScrollOrResize = () => {
+      measure()
+      ensureTicking()
+    }
+
+    measure()
+    ensureTicking()
+    window.addEventListener('scroll', onScrollOrResize, { passive: true })
+    window.addEventListener('resize', onScrollOrResize)
 
     return () => {
-      window.removeEventListener('scroll', computeTarget)
-      window.removeEventListener('resize', computeTarget)
-      cancelAnimationFrame(rafId)
+      window.removeEventListener('scroll', onScrollOrResize)
+      window.removeEventListener('resize', onScrollOrResize)
+      if (rafIdRef.current !== null) cancelAnimationFrame(rafIdRef.current)
     }
   }, [smoothing, ref])
 
