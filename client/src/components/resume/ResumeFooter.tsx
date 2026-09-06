@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom'
 import { profile } from '../../data/content'
-import { resumeMeta } from '../../data/resume'
 
 export default function ResumeFooter() {
   return (
@@ -16,9 +15,6 @@ export default function ResumeFooter() {
           <div className="mt-3 flex flex-col gap-1 text-sm">
             <a href={`mailto:${profile.email}`} className="hover:underline">
               {profile.email}
-            </a>
-            <a href={`tel:${resumeMeta.phone.replace(/[^\d+]/g, '')}`} className="hover:underline">
-              {resumeMeta.phone}
             </a>
             {profile.socials.map((social) => (
               <a key={social.label} href={social.href} className="hover:underline">

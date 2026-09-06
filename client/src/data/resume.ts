@@ -5,8 +5,8 @@ export const resumeMeta = {
   title: ['Software Engineering,', 'Database & ML', 'Research',],
   name: 'Steven Dang',
   affiliation: 'University of Texas at Arlington · Business Wire',
-  phone: '682-716-3199',
-  pdfHref: '/resume.pdf',
+  // BASE_URL-prefixed so this still resolves once deployed under a GH Pages subpath.
+  pdfHref: `${import.meta.env.BASE_URL}resume.pdf`,
 }
 
 export const highlights = [

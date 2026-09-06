@@ -62,12 +62,6 @@ export default function ResumeHeader() {
             </a>
           ))}
           <a
-            href={`tel:${resumeMeta.phone.replace(/[^\d+]/g, '')}`}
-            className="pointer-events-auto rounded-full border border-forest/30 px-5 py-2 text-forest transition-colors hover:border-forest"
-          >
-            {resumeMeta.phone}
-          </a>
-          <a
             href={resumeMeta.pdfHref}
             download
             className="pointer-events-auto rounded-full border border-forest/30 px-5 py-2 text-forest transition-colors hover:border-forest"
