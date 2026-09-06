@@ -12,7 +12,7 @@ const REPEAT = 6
 
 export default function Marquee({ sectionRef }: MarqueeProps) {
   const repeated = `${marqueeText}   `.repeat(REPEAT)
-  const { ref, progress } = useScrollProgress<HTMLDivElement>(0.012, sectionRef)
+  const { ref, progress } = useScrollProgress<HTMLDivElement>(sectionRef)
   // One full span is 50% of the doubled container's width, so one phrase-length is 50%/REPEAT —
   // the whole point being a single cycle of travel, not REPEAT cycles' worth.
   const oneCyclePercent = 50 / REPEAT

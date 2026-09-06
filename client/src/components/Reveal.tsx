@@ -15,7 +15,7 @@ export default function Reveal({ children, as: Tag = 'div', delay = 0, className
   return (
     <Tag
       ref={ref}
-      data-reveal={visible ? 'visible' : undefined}
+      data-reveal={visible ? 'visible' : 'hidden'}
       style={{ transitionDelay: visible ? `${delay}ms` : '0ms' }}
       className={className}
     >

@@ -13,7 +13,7 @@ type ScrollFadeProps = {
 
 /** Opacity tied directly to scroll position — reveals as the user scrolls, rather than a one-shot transition triggered on first view. */
 export default function ScrollFade({ children, as: Tag = 'div', className = '', curve = 2.5, targetRef }: ScrollFadeProps) {
-  const { ref, progress } = useScrollProgress<HTMLElement>(0.012, targetRef)
+  const { ref, progress } = useScrollProgress<HTMLElement>(targetRef)
   const opacity = Math.pow(progress, curve)
 
   return (
