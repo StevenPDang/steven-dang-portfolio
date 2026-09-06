@@ -23,7 +23,11 @@ jobs:
         with:
           node-version: 20
           cache: npm
-      - run: npm ci
+      # npm ci here hits a known npm bug with platform-specific optional deps
+      # (npm/cli#4828) — our lockfile was generated on macOS, and Vite's rolldown
+      # binding for linux-x64 doesn't always get installed under `ci`'s strict mode.
+      # `npm install` re-resolves the correct native binary for this runner.
+      - run: npm install
       - run: npm run build --workspace client
       - uses: actions/upload-pages-artifact@v3
         with:
