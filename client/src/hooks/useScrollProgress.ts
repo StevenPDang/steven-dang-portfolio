@@ -1,49 +1,63 @@
-import { useEffect, useRef, useState, type RefObject } from 'react'
+import { useEffect, useRef } from 'react'
 
 /**
- * Progress from an element entering the viewport to its top reaching the viewport top.
- * Read the latest position once per frame, without easing that lags behind fast scrolling.
- * An optional target lets multiple components follow the same element.
- * Reduced motion renders the completed state.
+ * Update a scroll effect without rendering React on every frame.
+ * Cache document coordinates until layout changes; scroll frames only read scrollY.
+ * endViewport is where the element's top finishes its animation (0 = viewport top).
  */
-export function useScrollProgress<T extends HTMLElement>(target?: RefObject<T | null>) {
-  const internalRef = useRef<T | null>(null)
-  const ref = target ?? internalRef
-  const [progress, setProgress] = useState(0)
+export function useScrollProgress<T extends HTMLElement>(
+  update: (node: T, progress: number) => void,
+  endViewport = 0,
+) {
+  const ref = useRef<T | null>(null)
 
   useEffect(() => {
+    const node = ref.current
+    if (!node) return
     const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
     let frame: number | null = null
+    let needsMeasure = true
+    let top = 0
+    let height = 1
+    let lastProgress = -1
 
-    const measure = () => {
+    const tick = () => {
       frame = null
-      if (motionQuery.matches) {
-        setProgress(1)
-        return
+      if (needsMeasure) {
+        top = node.getBoundingClientRect().top + window.scrollY
+        height = window.innerHeight
+        needsMeasure = false
       }
-      const node = ref.current
-      if (!node) return
-      const viewportHeight = window.innerHeight
-      const raw = (viewportHeight - node.getBoundingClientRect().top) / viewportHeight
-      setProgress(Math.min(1, Math.max(0, raw)))
+      const raw = (window.scrollY + height - top) / (height * (1 - endViewport))
+      const progress = motionQuery.matches ? 1 : Math.min(1, Math.max(0, raw))
+      if (progress !== lastProgress) {
+        update(node, progress)
+        lastProgress = progress
+      }
     }
-
-    const scheduleMeasure = () => {
-      if (frame === null) frame = requestAnimationFrame(measure)
+    const schedule = () => {
+      if (frame === null) frame = requestAnimationFrame(tick)
     }
-
-    measure()
-    window.addEventListener('scroll', scheduleMeasure, { passive: true })
-    window.addEventListener('resize', scheduleMeasure)
-    motionQuery.addEventListener('change', scheduleMeasure)
+    const invalidate = () => {
+      needsMeasure = true
+      schedule()
+    }
+    const observer = new ResizeObserver(invalidate)
+    observer.observe(document.body)
+    observer.observe(node)
+    tick()
+    window.addEventListener('scroll', schedule, { passive: true })
+    window.addEventListener('resize', invalidate)
+    motionQuery.addEventListener('change', schedule)
 
     return () => {
-      window.removeEventListener('scroll', scheduleMeasure)
-      window.removeEventListener('resize', scheduleMeasure)
-      motionQuery.removeEventListener('change', scheduleMeasure)
+      observer.disconnect()
+      window.removeEventListener('scroll', schedule)
+      window.removeEventListener('resize', invalidate)
+      motionQuery.removeEventListener('change', schedule)
       if (frame !== null) cancelAnimationFrame(frame)
     }
-  }, [ref])
+  }, [update, endViewport])
 
-  return { ref, progress }
+  return ref
 }

@@ -27,7 +27,8 @@ export default function Blob({ className = '', tone = 'sand', drift }: BlobProps
     return (
       <div
         aria-hidden
-        className={`pointer-events-none absolute rounded-full blur-3xl opacity-50 ${gradient} ${className}`}
+        data-blob-tone={tone}
+        className={`blob-fill pointer-events-none absolute rounded-full blur-3xl opacity-50 ${gradient} ${className}`}
       />
     )
   }
@@ -35,15 +36,15 @@ export default function Blob({ className = '', tone = 'sand', drift }: BlobProps
   const driftClass = drift === 'a' ? 'animate-drift-a' : 'animate-drift-b'
 
   return (
-    <div aria-hidden className={`pointer-events-none absolute ${className}`}>
+    <div aria-hidden data-blob-tone={tone} className={`pointer-events-none absolute ${className}`}>
       {TRAIL.map((echo, i) => (
         <div
           key={i}
-          className={`absolute inset-0 will-change-transform ${driftClass}`}
+          className={`blob-echo absolute inset-0 ${driftClass}`}
           style={{ animationDelay: `${echo.delay}s` }}
         >
           <div
-            className={`h-full w-full rounded-full blur-2xl ${gradient} ${echo.pulse ? 'will-change-transform animate-pulse-glow' : ''}`}
+            className={`blob-fill h-full w-full rounded-full blur-2xl ${gradient} ${echo.pulse ? 'animate-pulse-glow' : ''}`}
             style={{ opacity: 0.55 * echo.opacity, ...(echo.pulse ? {} : { transform: `scale(${echo.scale})` }) }}
           />
         </div>

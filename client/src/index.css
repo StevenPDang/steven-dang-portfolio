@@ -29,6 +29,10 @@ body {
   font-family: var(--font-display);
 }
 
+[data-scroll-fade] {
+  opacity: 0;
+}
+
 /* scroll-reveal primitive: elements start hidden/offset, JS flips data-visible */
 [data-reveal] {
   opacity: 0;
@@ -49,11 +53,6 @@ body {
   }
   html {
     scroll-behavior: auto;
-  }
-  .animate-drift-a,
-  .animate-drift-b,
-  .animate-pulse-glow {
-    animation: none;
   }
 }
 
@@ -113,4 +112,38 @@ body {
 
 .animate-pulse-glow {
   animation: pulse-glow 4s ease-in-out infinite;
+}
+
+#top[data-animating="false"] .blob-echo,
+#top[data-animating="false"] .animate-pulse-glow {
+  animation-play-state: paused;
+}
+
+/* Phones keep the drift with one soft gradient per blob, avoiding stacked blur surfaces. */
+@media (width < 48rem) {
+  .blob-echo:not(:first-child) {
+    display: none;
+  }
+  [data-blob-tone="sand"] {
+    --blob-color: var(--color-sand-dim);
+  }
+  [data-blob-tone="forest"] {
+    --blob-color: var(--color-forest);
+  }
+  .blob-fill {
+    filter: none;
+    background-image: radial-gradient(ellipse, var(--blob-color) 0%, transparent 70%);
+  }
+  .animate-pulse-glow {
+    animation: none;
+  }
+}
+
+/* Keep this after animation declarations so reduced motion wins the cascade. */
+@media (prefers-reduced-motion: reduce) {
+  .animate-drift-a,
+  .animate-drift-b,
+  .animate-pulse-glow {
+    animation: none;
+  }
 }

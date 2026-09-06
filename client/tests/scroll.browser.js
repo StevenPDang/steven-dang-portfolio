@@ -26,6 +26,18 @@ export async function testScrollAnimations() {
     assert(getComputedStyle(heading).opacity === expected, 'About must catch up after fast scrolling')
   }
 
+  // Each text block must visibly animate, including the stacked md layout.
+  for (const node of about.querySelectorAll('[data-scroll-fade]')) {
+    const documentTop = node.getBoundingClientRect().top + scrollY
+    window.scrollTo({ top: documentTop - innerHeight * 0.8, behavior: 'instant' })
+    await pause(150)
+    const opacity = Number(getComputedStyle(node).opacity)
+    assert(reducedMotion ? opacity === 1 : opacity > 0 && opacity < 1, 'Text must have an intermediate fade state')
+    window.scrollTo({ top: documentTop - innerHeight * 0.6 + 2, behavior: 'instant' })
+    await pause(150)
+    assert(getComputedStyle(node).opacity === '1', 'Text must finish fading while still in view')
+  }
+
   window.scrollTo({ top: timeline.getBoundingClientRect().top + scrollY - 200, behavior: 'instant' })
   await pause(1600)
   assert(timeline.dataset.reveal === 'visible', 'Timeline must reveal on entry')
