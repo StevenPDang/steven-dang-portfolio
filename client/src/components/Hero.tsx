@@ -31,10 +31,6 @@ export default function Hero() {
         </p>
         <p className="mt-2 text-sm tracking-[0.1em] text-muted sm:text-base">{profile.role}</p>
       </div>
-
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-xs tracking-[0.3em] text-muted">
-        Scroll
-      </div>
     </section>
   )
 }

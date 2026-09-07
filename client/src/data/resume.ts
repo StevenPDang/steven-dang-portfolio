@@ -71,13 +71,25 @@ export const education = {
 }
 
 export const skills = [
-  { category: 'Languages', items: ['C', 'C++', 'C#', 'Java', 'Python', 'SQL', 'JavaScript'] },
+  { category: 'Languages', items: ['C', 'C++', 'C#', 'Java', 'Python', 'SQL', 'JavaScript', 'TypeScript'] },
   {
     category: 'Frameworks & Libraries',
-    items: ['React', 'Next.js', 'Node.js', 'Flask', 'SQLAlchemy', 'Pandas', 'NumPy', 'Scikit-learn', 'XGBoost'],
+    items: ['React', 'Next.js', 'Node.js', 'Flask', 'SQLAlchemy', 'Pandas', 'NumPy', 'Scikit-learn', 'XGBoost', 'Playwright'],
   },
   {
     category: 'Systems & Tools',
-    items: ['PostgreSQL', 'REST APIs', 'Git', 'Docker', 'Kubernetes', 'Google Cloud Platform', 'Jira', 'CRDTs', 'Yjs'],
+    items: [
+      'PostgreSQL',
+      'REST APIs',
+      'WebSockets',
+      'Git',
+      'Docker',
+      'Kubernetes',
+      'Google Cloud Platform',
+      'Jira',
+      'CRDTs',
+      'Yjs',
+      'Vitest',
+    ],
   },
 ]

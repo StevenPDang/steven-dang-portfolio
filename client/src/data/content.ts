@@ -63,6 +63,13 @@ export const services = [
 
 export const projects = [
   {
+    title: 'Website-to-Figma Agent Pipeline',
+    tag: 'AI Agent',
+    description:
+      'An agentic TypeScript/Playwright pipeline that reconstructs public websites as editable, source-linked Figma layers — provider-neutral AI inference with schema-validated decisions and bounded correction loops, an authenticated CLI-to-Figma transport, and automated visual QA hitting 90%+ SSIM, backed by 177 tests.',
+    href: 'https://github.com/StevenPDang/website-to-figma-agent',
+  },
+  {
     title: 'OpenLedger POS',
     tag: 'Full-Stack',
     description:
