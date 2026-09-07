@@ -21,6 +21,10 @@ export default function ResumeSidebar() {
           <a
             key={section.id}
             href={`#${section.id}`}
+            onClick={(e) => {
+              e.preventDefault()
+              document.getElementById(section.id)?.scrollIntoView({ behavior: 'smooth' })
+            }}
             className={`border-l-2 py-1.5 pl-4 text-sm transition-colors ${
               isActive ? 'border-forest text-forest' : 'border-forest/10 text-muted hover:text-forest'
             }`}

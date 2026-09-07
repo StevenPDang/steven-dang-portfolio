@@ -11,6 +11,14 @@ const links = [
 export default function Nav() {
   const [open, setOpen] = useState(false)
 
+  // HashRouter treats a bare `#about` href as a route change (there's no such
+  // route, so it renders blank), so in-page section links scroll manually instead.
+  const handleSectionClick = (event: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    event.preventDefault()
+    setOpen(false)
+    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-6 py-6 sm:px-10">
       <div className="flex items-center justify-between">
@@ -24,6 +32,7 @@ export default function Nav() {
             <a
               key={link.href}
               href={link.href}
+              onClick={(e) => handleSectionClick(e, link.href)}
               className="rounded-full bg-forest px-5 py-2 text-sm tracking-wide text-cream transition-colors hover:bg-forest-light"
             >
               {link.label}
@@ -63,7 +72,7 @@ export default function Nav() {
             <a
               key={link.href}
               href={link.href}
-              onClick={() => setOpen(false)}
+              onClick={(e) => handleSectionClick(e, link.href)}
               className="rounded-full bg-forest px-5 py-3 text-center text-sm tracking-wide text-cream"
             >
               {link.label}
