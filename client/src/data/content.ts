@@ -15,7 +15,7 @@ export const marqueeText = ''
 export const statement = {
   heading: ["\"Behold! I have brought you a man.\"", "- Diogenes"],
   body: [
-    "Hi, I'm Steven, a Computer Science student at the University of Texas at Arlington (3.72 GPA, expected Dec 2027), currently working as an undergraduate ML researcher building retrieval pipelines over relational databases. This past summer I interned as a Software Engineer at Business Wire, shipping production fixes for an enterprise publishing platform used by news organizations worldwide.",
+    "Hi, I'm Steven, a Computer Science student at the University of Texas at Arlington (3.72 GPA, expected Dec 2027), currently working as an undergraduate ML researcher building retrieval pipelines over relational databases. This past summer I interned as a Software Engineer at Business Wire, shipping production fixes for an enterprise publishing platform used by fortune 10 companies & news organizations worldwide.",
     'Before that, I founded and ran Koicha, a popup coffee business in Fort Worth featured in two University Articles.',
   ],
 }
@@ -34,7 +34,7 @@ export const timeline = [
   {
     year: 'Summer 2026',
     title: 'Software Engineer Intern — Business Wire',
-    description: 'Shipped 12+ production enhancements for an enterprise publishing platform used by news organizations worldwide.',
+    description: 'Shipped 12+ production enhancements for an enterprise publishing platform used by fortune 10 companies news organizations worldwide.',
   },
   {
     year: 'Now',
